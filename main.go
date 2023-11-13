@@ -10,7 +10,6 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
-	"math/rand"
 	"neovim-tips/models"
 	"net/http"
 	"os"
@@ -188,16 +187,12 @@ func tipExists(content string) bool {
 }
 
 func randomTipHandler(w http.ResponseWriter, r *http.Request) {
-	var tips []model.Tip
 	var randomTip model.Tip
 
-	if result := db.Find(&tips); result.Error != nil {
+	// Query to select a random tip
+	if result := db.Order("RANDOM()").First(&randomTip); result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
-	}
-
-	if len(tips) > 0 {
-		randomTip = tips[rand.Intn(len(tips))]
 	}
 
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
