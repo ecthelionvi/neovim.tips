@@ -168,7 +168,6 @@ func populateTips() {
 		{Content: "Press 'Ctrl' + 'o' to jump back to the previous cursor position."},
 		{Content: "Use ':noh' to remove search highlighting."},
 		{Content: "Use ':%y' to copy the entire content of the file."},
-		{Content: "Press '>>' to indent a line and '<<' to unindent."},
 		{Content: "Use ':help' followed by a command to get help on that command."},
 		{Content: "Press 'Ctrl' + 'z' to suspend Vim and 'fg' in the terminal to get back."},
 		{Content: "Use 'zt' to scroll the current line to the top of the window."},
@@ -201,7 +200,8 @@ func randomTipHandler(w http.ResponseWriter, r *http.Request) {
 		randomTip = tips[rand.Intn(len(tips))]
 	}
 
-	json.NewEncoder(w).Encode(randomTip)
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Write([]byte(randomTip.Content))
 }
 
 func specificTipHandler(w http.ResponseWriter, r *http.Request) {
@@ -218,7 +218,8 @@ func specificTipHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(tip)
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Write([]byte(tip.Content))
 }
 
 func addTipHandler(w http.ResponseWriter, r *http.Request) {
