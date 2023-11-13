@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>neovim.tips</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .endpoint {
+    margin-bottom: 20px;
+  }
+  .curl-command {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 10px;
+    position: relative;
+    width: fit-content;
+  }
+  .copy-button {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #e7e7e7;
+  border: none;
+  transition: background-color 0.3s; /* Smooth transition for background color */
+  }
+
+  /* Style for when the text is copied */
+  .copied {
+    background-color: #b5b5b5; /* Darker shade when copied */
+  }
+
+  code {
+    white-space: pre; /* Keeps formatting for code */
+  }
+</style>
+</head>
+<body>
+
+<h1>neovim.tips API</h1>
+
+<div class="endpoint">
+  <h2>Get a Random Tip</h2>
+  <strong>Endpoint:</strong> <code>/api/random</code><br>
+  <strong>Method:</strong> <code>GET</code><br>
+  <p>Returns a random tip from the collection of neovim tips.</p>
+  <div class="curl-command">
+    <code>curl -X GET https://www.neovim.tips/api/random</code>
+    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+  </div>
+</div>
+
+<div class="endpoint">
+  <h2>Get a Specific Tip by ID</h2>
+  <strong>Endpoint:</strong> <code>/api/{id}</code><br>
+  <strong>Method:</strong> <code>GET</code><br>
+  <p>Fetches a specific tip based on its unique identifier (ID).</p>
+  <div class="curl-command">
+    <code>curl -X GET https://www.neovim.tips/api/22</code>
+    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+  </div>
+</div>
+
+<script>
+  function copyToClipboard(button) {
+    var copyText = button.previousElementSibling.innerText;
+    var textArea = document.createElement("textarea");
+    textArea.value = copyText.trim();
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("Copy");
+    textArea.remove();
+
+    // Add a class to the button to change its style
+    button.classList.add('copied');
+
+    // Remove the class after a short delay
+    setTimeout(function() {
+      button.classList.remove('copied');
+    }, 500); // The effect will last for 1 second
+  }
+</script>
+
+</body>
+</html>
