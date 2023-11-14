@@ -50,7 +50,6 @@ func init() {
 	if err != nil {
 		log.Fatal("Failed to migrate User model:", err)
 	}
-
 }
 
 func createSuperUser(username, password string) {
@@ -143,35 +142,12 @@ func authenticateJWT(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		// Optionally, you can add further checks to validate the user's role or permissions.
-
 		next(w, r)
 	}
 }
 
 func populateTips() {
-	tips := []model.Tip{
-		{Content: "Use 'ciw' to change the entire word without going into the insert mode."},
-		{Content: "Press 'gg' to quickly move to the beginning of the file."},
-		{Content: "Use 'G' to jump to the end of the file."},
-		{Content: "Use ':split' or ':vsplit' to split the window horizontally or vertically."},
-		{Content: "Press 'Ctrl' + 'w' followed by an arrow key to navigate between split windows."},
-		{Content: "Use ':%s/old/new/g' to replace all occurrences of 'old' with 'new' in the file."},
-		{Content: "Press 'u' to undo the last change and 'Ctrl' + 'r' to redo."},
-		{Content: "Use 'ggVG' to select the entire content of a file."},
-		{Content: "Press 'yy' to copy a line and 'p' to paste it after the cursor."},
-		{Content: "Use 'dd' to cut a line and 'p' to paste it."},
-		{Content: "Press 'v' to start visual mode for text selection."},
-		{Content: "Use ':w' to save changes and ':q' to quit Vim."},
-		{Content: "Use '/search_term' to search for a term in the file and 'n' to find the next occurrence."},
-		{Content: "Press 'Ctrl' + 'o' to jump back to the previous cursor position."},
-		{Content: "Use ':noh' to remove search highlighting."},
-		{Content: "Use ':%y' to copy the entire content of the file."},
-		{Content: "Use ':help' followed by a command to get help on that command."},
-		{Content: "Press 'Ctrl' + 'z' to suspend Vim and 'fg' in the terminal to get back."},
-		{Content: "Use 'zt' to scroll the current line to the top of the window."},
-		{Content: "Use ':%s/old/new/gc' to replace all occurrences of 'old' with 'new' and confirm each replacement."},
-	}
+	tips := []model.Tip{}
 
 	for _, tip := range tips {
 		if !tipExists(tip.Content) {
@@ -184,6 +160,18 @@ func tipExists(content string) bool {
 	var count int64
 	db.Model(&model.Tip{}).Where("content = ?", content).Count(&count)
 	return count > 0
+}
+
+func totalTipsHandler(w http.ResponseWriter, r *http.Request) {
+	var count int64
+	result := db.Model(&model.Tip{}).Count(&count)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Write([]byte(fmt.Sprintf("%d", count)))
 }
 
 func randomTipHandler(w http.ResponseWriter, r *http.Request) {
@@ -301,18 +289,9 @@ func editTipHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	superuserName := os.Getenv("SUPERUSER_NAME")
-	superuserPassword := os.Getenv("SUPERUSER_PASSWORD")
-
-	// Check if the variables are loaded correctly
-	if superuserName == "" || superuserPassword == "" {
-		log.Fatal("Required environment variables are missing")
-	}
-	populateTips()
-	createSuperUser(superuserName, superuserPassword)
-
 	r := mux.NewRouter()
 	r.HandleFunc("/api/login", loginHandler).Methods("POST")
+	r.HandleFunc("/api/total", totalTipsHandler).Methods("GET")
 	r.HandleFunc("/api/random", randomTipHandler).Methods("GET")
 	r.HandleFunc("/api/{id:[0-9]+}", specificTipHandler).Methods("GET")
 	r.HandleFunc("/api/add", authenticateJWT(addTipHandler)).Methods("POST")
