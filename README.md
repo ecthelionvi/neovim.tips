@@ -17,8 +17,8 @@ Systemd services allow you to manage and control background services on your Lin
    Description=neovim-tips
 
    [Service]
-   ExecStart=/home/ubuntu/go/src/github.com/ecthelionvi/neovim-tips/neovim-tips
-   WorkingDirectory=/home/ubuntu/go/src/github.com/ecthelionvi/neovim-tips
+   ExecStart=//home/ubuntu/neovim.tips/neovim-tips
+   WorkingDirectory=/home/ubuntu/neovim.tips
    User=ubuntu
    Group=ubuntu
    Restart=always
