@@ -102,7 +102,7 @@ func AddTipHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if utils.TipExists(newTip.Content) {
-		http.Error(w, "Tip already exists", http.StatusConflict) // Or any other appropriate status
+		http.Error(w, "Tip already exists", http.StatusConflict)
 		return
 	}
 
