@@ -22,6 +22,7 @@ RUN go build -o neovim-tips
 # Copy the Nginx configuration file into the container
 COPY default /etc/nginx/sites-enabled/default
 
+# Copy the .env file into the container
 COPY .env /neovim-tips/.env
 
 # Expose the port that Nginx is listening on
