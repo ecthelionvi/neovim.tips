@@ -23,7 +23,7 @@ RUN go build -o neovim-tips-backend
 
 # Build Frontend
 WORKDIR /neovim-tips/frontend/neovim-tips
-RUN npm install && npm run build
+RUN npm install && npm run build --verbose
 
 # Set the working directory back to the root of your project
 WORKDIR /neovim-tips
