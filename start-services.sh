@@ -4,7 +4,7 @@
 /neovim-tips/backend/neovim-tips-backend &
 
 # Navigate to the Next.js frontend directory
-cd /neovim-tips/frontend
+cd /neovim-tips/frontend/neovim-tips
 
 # Start the Next.js application
 npm start &
