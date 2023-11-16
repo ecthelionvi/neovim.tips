@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# Start Nginx
-nginx -g 'daemon off;' &
-
 # Start the Go backend
 /neovim-tips/backend/neovim-tips-backend &
 
-# Serve the Next.js frontend
-cd /neovim-tips/frontend/neovim-tips
-npm start
+# Navigate to the Next.js frontend directory
+cd /neovim-tips/frontend
+
+# Start the Next.js application
+npm start &
+
+# Start Nginx in the foreground
+nginx -g 'daemon off;'
