@@ -1,6 +1,9 @@
 # Use the official Ubuntu base image
 FROM ubuntu:latest
 
+# Use the official Node.js 18 base image for linux/amd64
+FROM --platform=linux/amd64 node:18 as builder
+
 # Install Nginx, Git, Go, Node.js, npm, and other necessary tools
 RUN apt-get update && \
     apt-get install -y nginx git wget curl
