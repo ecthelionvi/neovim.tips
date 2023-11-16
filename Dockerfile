@@ -3,7 +3,9 @@ FROM ubuntu:latest
 
 # Install Nginx, Git, Go, Node.js, npm, and other necessary tools
 RUN apt-get update && \
-    apt-get install -y nginx git wget curl nodejs npm
+    apt-get install -y nginx git wget curl && \
+    curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
+    apt-get install -y nodejs
 
 # Install Go 1.21.4
 RUN wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz && \
