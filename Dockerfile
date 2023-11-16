@@ -1,19 +1,11 @@
 # Use the official Ubuntu base image
 FROM ubuntu:latest
 
-# Use the official Node.js 18 base image for linux/amd64
-FROM --platform=linux/amd64 node:18 as builder
-
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-
 # Install Nginx, Git, Go, Node.js, npm, and other necessary tools
 RUN apt-get update && \
-    apt-get install -y nginx git wget curl
-
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt-get install -y nodejs
+    apt-get install -y nginx git wget curl && \
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
 
 # Install Go 1.21.4
 RUN wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz && \
