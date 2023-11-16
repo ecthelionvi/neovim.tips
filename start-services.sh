@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Navigate to the Go backend directory
+cd /neovim-tips/backend
+
 # Start the Go backend
-/neovim-tips/backend/neovim-tips-backend &
+RUN ./neovim-tips &
 
 # Navigate to the Next.js frontend directory
 cd /neovim-tips/frontend/neovim-tips

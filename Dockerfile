@@ -19,7 +19,7 @@ RUN git clone https://github.com/ecthelionvi/neovim.tips.git /neovim-tips
 
 # Build Backend
 WORKDIR /neovim-tips/backend
-RUN go build -o neovim-tips-backend
+RUN go build
 
 # Build Frontend
 WORKDIR /neovim-tips/frontend/neovim-tips
