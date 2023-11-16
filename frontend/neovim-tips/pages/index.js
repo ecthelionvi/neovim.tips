@@ -26,7 +26,7 @@ export default function Home({ totalTips }) {
         <strong>Method:</strong> <code>GET</code><br />
         <p>Fetches a specific tip based on its unique identifier (ID).</p>
         <div className="curl-command" style={{ backgroundColor: 'black', color: 'white', padding: '2px 4px' }}>
-          <code>curl -s https://www.neovim.tips/api/{totalTips}</code>
+          <code>curl -s https://www.neovim.tips/api/23</code>
         </div>
       </div>
 

@@ -4,7 +4,7 @@
 cd /neovim-tips/backend
 
 # Start the Go backend
-RUN ./neovim-tips &
+./neovim-tips &
 
 # Navigate to the Next.js frontend directory
 cd /neovim-tips/frontend/neovim-tips
