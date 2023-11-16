@@ -1,9 +1,6 @@
 # Use the official Ubuntu base image
 FROM ubuntu:latest
 
-# Use the official Node.js 21 base image for linux/amd64
-FROM --platform=linux/amd64 node:21 as build-stage
-
 # Install Nginx, Git, Go, Node.js, npm, and other necessary tools
 RUN apt-get update && \
     apt-get install -y nginx git wget curl && \
