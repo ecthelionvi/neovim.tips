@@ -7,10 +7,10 @@ RUN apt-get update && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
-# Install Go 1.21.4
-RUN wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz && \
-    rm go1.21.4.linux-amd64.tar.gz
+# Install Go 1.21.4 for ARM64
+RUN wget https://go.dev/dl/go1.21.4.linux-arm64.tar.gz && \
+    tar -C /usr/local -xzf go1.21.4.linux-arm64.tar.gz && \
+    rm go1.21.4.linux-arm64.tar.gz
 
 ENV PATH="${PATH}:/usr/local/go/bin"
 
