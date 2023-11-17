@@ -2,6 +2,8 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
+    server_tokens off;
+
     server_name neovim.tips www.neovim.tips;
 
     # Proxy requests to Next.js server

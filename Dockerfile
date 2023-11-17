@@ -50,4 +50,4 @@ EXPOSE 80
 # Use a script to start both Nginx, the backend, and serve the frontend
 COPY start_services.py /start_services.py
 RUN chmod +x /start_services.py
-CMD ["python", "/start_services.py"]
+CMD ["python3", "/start_services.py"]
