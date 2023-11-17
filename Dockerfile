@@ -1,17 +1,27 @@
 # Use the official Ubuntu base image
 FROM ubuntu:latest
 
-# Install Nginx, Git, Go, Node.js, npm, and other necessary tools
+# Install Nginx, Git, wget, curl, and other necessary tools
 RUN apt-get update && \
-    apt-get install -y nginx git wget curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nginx git wget curl ca-certificates gnupg
+
+# Install Node.js
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    NODE_MAJOR=20 && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
     apt-get install -y nodejs
+
+# Install Python
+RUN apt-get install -y python3 python3-pip
 
 # Install Go 1.21.4 for ARM64
 RUN wget https://go.dev/dl/go1.21.4.linux-arm64.tar.gz && \
     tar -C /usr/local -xzf go1.21.4.linux-arm64.tar.gz && \
     rm go1.21.4.linux-arm64.tar.gz
 
+# Set the Go environment variables
 ENV PATH="${PATH}:/usr/local/go/bin"
 
 # Clone the repository
@@ -38,6 +48,6 @@ COPY .env /neovim-tips/backend/.env
 EXPOSE 80
 
 # Use a script to start both Nginx, the backend, and serve the frontend
-COPY start-services.sh /start-services.sh
-RUN chmod +x /start-services.sh
-CMD ["/start-services.sh"]
+COPY start_services.py /start_services.py
+RUN chmod +x /start_services.py
+CMD ["python", "/start_services.py"]
