@@ -22,7 +22,7 @@ export default function Home({ totalTips }) {
 
       <div className="endpoint" id="specific-tip-example" style={{ marginBottom: '20px' }}>
         <h2>Get a Specific Tip by ID</h2>
-        <strong>Endpoint:</strong> <code>{`/api/{1-${totalTips}}`}</code><br />
+        <strong>Endpoint:</strong> <code>{totalTips}</code><br />
         <strong>Method:</strong> <code>GET</code><br />
         <p>Fetches a specific tip based on its unique identifier (ID).</p>
         <div className="curl-command" style={{ backgroundColor: 'black', color: 'white', padding: '2px 4px' }}>
@@ -39,14 +39,15 @@ export default function Home({ totalTips }) {
 
 export async function getServerSideProps(context) {
   try {
-    const response = await fetch('https://www.neovim.tips/api/total');
+    const response = await fetch('https://www.neovim.tips/api/tota');
     if (!response.ok) {
       throw new Error(`Failed to fetch: ${response.status}`);
     }
     const totalTips = await response.text();
-    return { props: { totalTips } };
+    const formattedTotalTips = `/api/{1-${totalTips}}`;
+    return { props: { totalTips: formattedTotalTips } };
   } catch (error) {
     console.error('Error fetching total tips:', error);
-    return { props: { totalTips: 'N/A' } };
+    return { props: { totalTips: '/api/{id}' } };
   }
 }
