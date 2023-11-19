@@ -39,7 +39,7 @@ export default function Home({ totalTips }) {
 
 export async function getServerSideProps(context) {
   try {
-    const response = await fetch('https://www.neovim.tips/api/tota');
+    const response = await fetch('https://www.neovim.tips/api/total');
     if (!response.ok) {
       throw new Error(`Failed to fetch: ${response.status}`);
     }
