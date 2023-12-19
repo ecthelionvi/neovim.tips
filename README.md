@@ -2,7 +2,7 @@
 🚀 Neovim.tips 
 </h1>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ecthelionvi/Images/main/Neovim.tips.png" alt="Neovim.tips Logo">
+  <img src="https://raw.githubusercontent.com/ecthelionvi/Images/main/Neovim.tips.png" alt="Neovim.tips Logo" width="400" height="600">
 </p>
 
 ## 📋 Project Overview
